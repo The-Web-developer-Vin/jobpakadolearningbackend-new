@@ -444,3 +444,24 @@ exports.getbyId = async (req, res) => {
     });
   }
 };
+
+exports.getbyuserAuthId = async (req, res) => {
+  try {
+    const user = await userModel
+      .findOne({ userAuthId: req.params.userAuthId })
+      .populate("userAuthId");
+    res.status(200).send({
+      data: user,
+      error: null,
+      status: 1,
+      message: "Getting User Successfully",
+    });
+  } catch (error) {
+    res.status(400).send({
+      data: null,
+      error: error,
+      status: 0,
+      message: "error in getting user",
+    });
+  }
+}; 

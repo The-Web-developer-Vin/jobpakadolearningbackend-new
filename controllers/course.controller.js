@@ -3,6 +3,7 @@ const courseModel = require("../models/course.model");
 const ratingModel = require("../models/rating.model");
 const payment_logModel = require("../models/payment_log.model");
 const wishListModel = require("../models/wishList.model");
+const cartModel = require("../models/cart.model")
 
 exports.create_update = async (req, res) => {
   try {
@@ -92,10 +93,16 @@ exports.getAll = async (req, res) => {
     for (let i = 0; i < course.length; i++) {
       const rating = await ratingModel.find({ courseId: course[i]._id });
       const wishList = await wishListModel.findOne({ userId: req.query.userId , courseId:course[i]._id });
+      const cartItem = await cartModel.findOne({ userId : req.query.userId , courseId: course[i]._id })
       if(wishList) {
         course[i].wishList = true
       }else {
         course[i].wishList = false
+      }
+      if(cartItem) {
+        course[i].addedCart = true
+      }else {
+        course[i].addedCart = false
       }
       for (let j = 0; j < rating.length; j++) {
         rate = rate + rating[j].rating;

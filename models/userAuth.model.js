@@ -15,7 +15,7 @@ const userAuthschema = new mongoose.Schema(
         role: {
             type: String,
             enum: ['User', 'Instructor'],
-            required: true
+            // required: true
         },
         city: {
             type: String
